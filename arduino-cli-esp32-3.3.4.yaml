@@ -1,0 +1,7 @@
+board_manager:
+  additional_urls:
+    - https://espressif.github.io/arduino-esp32/package_esp32_index.json
+directories:
+  data: C:/Users/itsom/.arduino334
+  downloads: C:/Users/itsom/AppData/Local/Arduino15/staging
+  user: C:/Users/itsom/Documents/Arduino

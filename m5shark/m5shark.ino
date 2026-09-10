@@ -1,0 +1,539 @@
+/* FLASH SETTINGS
+Board: LOLIN D32
+ Frequency: 80MHz
+Partition Scheme: Minimal SPIFFS
+https://www.online-utility.org/image/convert/to/XBM
+*/
+
+#include "configs.h"
+
+#ifndef HAS_SCREEN
+  #define MenuFunctions_h
+  #define Display_h
+#endif
+
+#include <stdio.h>
+
+#ifdef HAS_GPS
+  #include "GpsInterface.h"
+#endif
+
+#include "Assets.h"
+#include "WiFiScan.h"
+#ifdef HAS_SD
+  #include "SDInterface.h"
+#endif
+#include "Buffer.h"
+
+#ifdef HAS_FLIPPER_LED
+  #include "flipperLED.h"
+#elif defined(XIAO_ESP32_S3)
+  #include "xiaoLED.h"
+#elif defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKCP2)
+  #include "stickcLED.h"
+#elif defined(HAS_NEOPIXEL_LED)
+  #include "LedInterface.h"
+#endif
+
+#include "settings.h"
+#include "CommandLine.h"
+#include "lang_var.h"
+
+#ifdef HAS_BATTERY
+  #include "BatteryInterface.h"
+#endif
+
+#ifdef HAS_SCREEN
+  #include "Display.h"
+  #include "MenuFunctions.h"
+  #ifdef MARAUDER_V8
+    #include "SharkUI.h"
+  #endif
+#endif
+
+#ifdef HAS_BUTTONS
+  #include "Switches.h"
+  
+  #if (U_BTN >= 0)
+    Switches u_btn = Switches(U_BTN, 1000, U_PULL);
+  #endif
+  #if (D_BTN >= 0)
+    Switches d_btn = Switches(D_BTN, 1000, D_PULL);
+  #endif
+  #if (L_BTN >= 0)
+    Switches l_btn = Switches(L_BTN, 1000, L_PULL);
+  #endif
+  #if (R_BTN >= 0)
+    Switches r_btn = Switches(R_BTN, 1000, R_PULL);
+  #endif
+  #if (C_BTN >= 0)
+    Switches c_btn = Switches(C_BTN, 1000, C_PULL);
+  #endif
+
+#endif
+
+WiFiScan wifi_scan_obj;
+EvilPortal evil_portal_obj;
+Buffer buffer_obj;
+Settings settings_obj;
+CommandLine cli_obj;
+
+#ifdef HAS_GPS
+  GpsInterface gps_obj;
+#endif
+
+#ifdef HAS_BATTERY
+  BatteryInterface battery_obj;
+#endif
+
+#ifdef HAS_SCREEN
+  Display display_obj;
+  MenuFunctions menu_function_obj;
+#endif
+
+#if defined(HAS_SD) && !defined(HAS_C5_SD)
+  SDInterface sd_obj;
+#endif
+
+#ifdef HAS_FLIPPER_LED
+  flipperLED flipper_led;
+#elif defined(XIAO_ESP32_S3)
+  xiaoLED xiao_led;
+#elif defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKCP2)
+  stickcLED stickc_led;
+#elif defined(HAS_NEOPIXEL_LED)
+  LedInterface led_obj;
+#endif
+
+const String PROGMEM version_number = MARAUDER_VERSION;
+
+#ifdef HAS_NEOPIXEL_LED
+  Adafruit_NeoPixel strip = Adafruit_NeoPixel(Pixels, PIN, NEO_GRB + NEO_KHZ800);
+#endif
+
+uint32_t currentTime  = 0;
+
+// PWM Brightness Control
+#ifdef HAS_SCREEN
+  #include <Preferences.h>
+  #define BL_CHANNEL 0
+  #define BL_FREQ 5000
+  #define BL_RESOLUTION 8
+  const uint8_t BL_LEVELS[] = {26, 51, 77, 102, 128, 153, 179, 204, 230, 255};
+  const uint8_t BL_NUM_LEVELS = 10;
+  uint8_t bl_level_idx = 9; // default full brightness
+  Preferences bl_prefs;
+#endif
+
+// Helper macros for LEDC API compatibility (2.x vs 3.x board package)
+#ifdef HAS_SCREEN
+  #ifndef HAS_MINI_SCREEN
+    #if ESP_ARDUINO_VERSION_MAJOR >= 3
+      #define BL_SETUP()       ledcAttach(TFT_BL, BL_FREQ, BL_RESOLUTION)
+      #define BL_SET(duty)     ledcWrite(TFT_BL, (duty))
+    #else
+      #define BL_SETUP()       do { ledcSetup(BL_CHANNEL, BL_FREQ, BL_RESOLUTION); ledcAttachPin(TFT_BL, BL_CHANNEL); } while(0)
+      #define BL_SET(duty)     ledcWrite(BL_CHANNEL, (duty))
+    #endif
+  #endif
+#endif
+
+#ifndef HAS_MINI_SCREEN
+  void brightnessInit() {
+    #ifdef HAS_SCREEN
+      BL_SETUP();
+      bl_prefs.begin("backlight", false);
+      bl_level_idx = bl_prefs.getUChar("level", 9);
+      if (bl_level_idx >= BL_NUM_LEVELS) bl_level_idx = 9;
+      BL_SET(BL_LEVELS[bl_level_idx]);
+    #endif
+  }
+
+  void brightnessCycle() {
+    #ifdef HAS_SCREEN
+      bl_level_idx = (bl_level_idx + 1) % BL_NUM_LEVELS;
+      BL_SET(BL_LEVELS[bl_level_idx]);
+      bl_prefs.putUChar("level", bl_level_idx);
+      Serial.print(F("[Brightness] Level "));
+      Serial.print(bl_level_idx + 1);
+      Serial.print(F("/"));
+      Serial.print(BL_NUM_LEVELS);
+      Serial.print(F(" ("));
+      Serial.print(BL_LEVELS[bl_level_idx] * 100 / 255);
+      Serial.println(F("%)"));
+    #endif
+  }
+
+  uint8_t getBrightnessLevel() {
+    #ifdef HAS_SCREEN
+      return bl_level_idx;
+    #else
+      return 0;
+    #endif
+  }
+
+  void brightnessSave(uint8_t level) {
+    #ifdef HAS_SCREEN
+      if (level >= BL_NUM_LEVELS) level = BL_NUM_LEVELS - 1;
+      bl_level_idx = level;
+      BL_SET(BL_LEVELS[bl_level_idx]);
+      bl_prefs.putUChar("level", bl_level_idx);
+    #endif
+  }
+
+  void backlightOn() {
+    #ifdef HAS_SCREEN
+      BL_SET(BL_LEVELS[bl_level_idx]);
+    #endif
+  }
+
+  void backlightOff() {
+    #ifdef HAS_SCREEN
+      BL_SET(0);
+    #endif
+  }
+#else
+  void backlightOn() {
+    #ifdef HAS_SCREEN
+      #if defined(MARAUDER_MINI) || defined(MARAUDER_MINI_V3)
+        digitalWrite(TFT_BL, LOW);
+      #endif
+    
+      #if !defined(MARAUDER_MINI) && !defined(MARAUDER_MINI_V3)
+        digitalWrite(TFT_BL, HIGH);
+      #endif
+    #endif
+  }
+
+  void backlightOff() {
+    #ifdef HAS_SCREEN
+      #if defined(MARAUDER_MINI) || defined(MARAUDER_MINI_V3)
+        digitalWrite(TFT_BL, HIGH);
+      #endif
+    
+      #if !defined(MARAUDER_MINI) && !defined(MARAUDER_MINI_V3)
+        digitalWrite(TFT_BL, LOW);
+      #endif
+    #endif
+  }
+#endif
+
+#ifdef HAS_C5_SD
+  SPIClass sharedSPI(SPI);
+  SDInterface sd_obj = SDInterface(&sharedSPI, SD_CS);
+#endif
+
+void setup()
+{
+  randomSeed(esp_random());
+  
+  #ifndef DEVELOPER
+    esp_log_level_set("*", ESP_LOG_NONE);
+  #endif
+  
+  #ifndef HAS_IDF_3
+    esp_spiram_init();
+  #endif
+
+  Serial.begin(115200);
+
+  #ifdef HAS_ACT_LED
+    pinMode(ACT_LED_PIN, OUTPUT);
+    delay(100);
+    digitalWrite(ACT_LED_PIN, LOW);
+  #endif
+
+  while(!Serial)
+    delay(10);
+
+  // BT crash guard: consume any crash mark left by a BLE init that aborted
+  // the previous boot. When the mark is found BLE is locked (and the device
+  // can no longer boot-loop at the splash because of the BLE stack); the
+  // lock releases itself after five clean boots. Also emits a stage trace
+  // so a serial capture pinpoints any future boot crash immediately.
+  Serial.println(F("[BOOT] 01 serial up"));
+  wifi_scan_obj.bleBootGuard();
+
+  #ifdef HAS_C5_SD
+    sharedSPI.begin(SD_SCK, SD_MISO, SD_MOSI);
+    delay(100);
+  #endif
+
+  #if defined(MARAUDER_M5STICKCP2) // Prevent StickCP2 from turning off when disconnect USB cable
+    pinMode(POWER_HOLD_PIN, OUTPUT);
+    digitalWrite(POWER_HOLD_PIN, HIGH);
+  #endif
+  
+  #ifdef HAS_SCREEN
+    pinMode(TFT_BL, OUTPUT);
+  #endif
+  
+  backlightOff();
+  #if BATTERY_ANALOG_ON == 1
+    pinMode(BATTERY_PIN, OUTPUT);
+    pinMode(CHARGING_PIN, INPUT);
+  #endif
+  
+  // Preset SPI CS pins to avoid bus conflicts
+  #ifdef HAS_SCREEN
+    digitalWrite(TFT_CS, HIGH);
+  #endif
+  
+  #if defined(HAS_SD) && !defined(HAS_C5_SD)
+    pinMode(SD_CS, OUTPUT);
+
+    delay(10);
+  
+    digitalWrite(SD_CS, HIGH);
+
+    delay(10);
+  #endif
+
+  //Serial.begin(115200);
+
+  //while(!Serial)
+  //  delay(10);
+
+  Serial.println("ESP-IDF version is: " + String(esp_get_idf_version()));
+
+  #ifdef HAS_PSRAM
+    if (!psramInit()) {
+      Serial.println(F("PSRAM not available"));
+    }
+  #endif
+
+  #ifdef HAS_SIMPLEX_DISPLAY
+    #if defined(HAS_SD)
+      // Do some SD stuff
+      if(!sd_obj.initSD())
+        Serial.println(F("SD Card NOT Supported"));
+
+    #endif
+  #endif
+
+  #ifdef HAS_SCREEN
+    Serial.println(F("[BOOT] 02 display init"));
+    display_obj.RunSetup();
+    display_obj.tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  #endif
+
+  // Init PWM brightness AFTER display init (so ledcAttach overrides TFT_eSPI's pinMode)
+  #ifndef HAS_MINI_SCREEN
+    brightnessInit();
+    backlightOff();
+  #endif
+
+  #ifdef HAS_SCREEN
+    #if defined(MARAUDER_V8)
+      // The SHARK splash is an intentional boot-state animation, so the
+      // backlight must be active while it is drawn. The stored theme is
+      // restored first so the boot art matches the rest of the interface.
+      backlightOn();
+      sharkThemeBegin();
+      playSharkBoot(display_obj.tft, display_obj.version_number);
+    #elif !defined(MARAUDER_CARDPUTER) && !defined(MARAUDER_CARDPUTER_ADV)
+      display_obj.tft.drawCentreString("ESP32 Marauder", TFT_WIDTH/2, TFT_HEIGHT * 0.33, 1);
+      display_obj.tft.drawCentreString("JustCallMeKoko", TFT_WIDTH/2, TFT_HEIGHT * 0.5, 1);
+      display_obj.tft.drawCentreString(display_obj.version_number, TFT_WIDTH/2, TFT_HEIGHT * 0.66, 1);
+    #else
+      display_obj.tft.drawCentreString("ESP32 Marauder", TFT_HEIGHT/2, TFT_WIDTH * 0.33, 1);
+      display_obj.tft.drawCentreString("JustCallMeKoko", TFT_HEIGHT/2, TFT_WIDTH * 0.5, 1);
+      display_obj.tft.drawCentreString(display_obj.version_number, TFT_HEIGHT/2, TFT_WIDTH * 0.66, 1);
+    #endif
+  #endif
+
+
+  backlightOn(); // Need this
+
+  #ifdef HAS_SCREEN
+    // Do some stealth mode stuff
+    #ifdef HAS_BUTTONS
+      if (c_btn.justPressed()) {
+        display_obj.headless_mode = true;
+
+        backlightOff();
+      }
+    #endif
+  #endif
+
+  Serial.println(F("[BOOT] 03 settings"));
+  settings_obj.begin();
+
+  const char* type = settings_obj.getSettingType("wu");
+
+  if (type == nullptr || type[0] == '\0') {
+    Serial.println(F("Current settings format not supported. Installing new default settings..."));
+    settings_obj.createDefaultSettings(SPIFFS);
+  }
+
+  buffer_obj = Buffer();
+
+  #ifndef HAS_SIMPLEX_DISPLAY
+    #if defined(HAS_SD)
+      // Do some SD stuff
+      Serial.println(F("[BOOT] 04 sd card"));
+      if(!sd_obj.initSD())
+        Serial.println(F("SD Card NOT Supported"));
+
+    #endif
+  #endif
+
+  Serial.println(F("[BOOT] 05 radios (wifi only, ble deferred)"));
+  wifi_scan_obj.RunSetup();
+
+  #ifdef HAS_SCREEN
+    display_obj.tft.setTextColor(TFT_GREEN, TFT_BLACK);
+    #ifdef MARAUDER_V8
+      // Writes into the splash status line so the skull stays intact while
+      // the radios come up.
+      display_obj.tft.fillRect(18, 268, 204, 9, TFT_BLACK);
+      display_obj.tft.setTextDatum(ML_DATUM);
+      display_obj.tft.setTextColor(WD_CYAN, TFT_BLACK);
+      display_obj.tft.drawString(">", 18, 272, 1);
+      display_obj.tft.setTextColor(WD_BONE, TFT_BLACK);
+      display_obj.tft.drawString(wifi_scan_obj.ble_guard_locked
+                                   ? "SERVICES // BT GUARDED OFF"
+                                   : "STARTING SERVICES",
+                                 30, 272, 1);
+      display_obj.tft.setTextDatum(TL_DATUM);
+    #else
+      display_obj.tft.drawCentreString("Initializing...", TFT_WIDTH/2, TFT_HEIGHT * 0.82, 1);
+    #endif
+  #endif
+
+  Serial.println(F("[BOOT] 06 web control"));
+  evil_portal_obj.setup();
+
+  #ifdef HAS_BATTERY
+    Serial.println(F("[BOOT] 07 battery"));
+    battery_obj.RunSetup();
+  #endif
+
+  #ifdef HAS_BATTERY
+    battery_obj.battery_level = battery_obj.getBatteryLevel();
+  #endif
+
+  // Do some LED stuff
+  #ifdef HAS_FLIPPER_LED
+    flipper_led.RunSetup();
+  #elif defined(XIAO_ESP32_S3)
+    xiao_led.RunSetup();
+  #elif defined(MARAUDER_M5STICKC)
+    stickc_led.RunSetup();
+  #elif defined(HAS_NEOPIXEL_LED)
+    led_obj.RunSetup();
+  #endif
+
+  #ifdef HAS_GPS
+    gps_obj.begin();
+  #endif
+
+  #ifdef HAS_SCREEN  
+    display_obj.tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  #endif
+
+  #ifdef HAS_SCREEN
+    #if defined(MARAUDER_CARDPUTER) || defined(MARAUDER_CARDPUTER_ADV)
+      display_obj.clearScreen();
+    #endif
+    Serial.println(F("[BOOT] 08 menu"));
+    menu_function_obj.RunSetup();
+  #endif
+
+  /*char ssidBuf[64] = {0};  // or prefill with existing SSID
+  if (keyboardInput(ssidBuf, sizeof(ssidBuf), "Enter SSID")) {
+    // user pressed OK
+    Serial.println(ssidBuf);
+  } else {
+    Serial.println(F("User exited keyboard"));
+  }
+
+  menu_function_obj.changeMenu(menu_function_obj.current_menu);*/
+
+  wifi_scan_obj.StartScan(WIFI_SCAN_OFF);
+
+  Serial.println(F("[BOOT] 09 cli"));
+  cli_obj.RunSetup();
+
+  // Setup() survived end to end: count this as a clean boot for the BT
+  // crash guard (five clean boots release a locked BLE).
+  wifi_scan_obj.bleBootOk();
+  Serial.println(F("[BOOT] ready"));
+}
+
+
+void loop()
+{
+  currentTime = millis();
+  bool mini = false;
+
+  #ifdef SCREEN_BUFFER
+    #ifndef HAS_ILI9341
+      mini = true;
+    #endif
+  #endif
+
+  #if (defined(HAS_ILI9341) && !defined(MARAUDER_CYD_2USB))
+    #ifdef HAS_BUTTONS
+      if (c_btn.isHeld()) {
+        if (menu_function_obj.disable_touch)
+          menu_function_obj.disable_touch = false;
+        else
+          menu_function_obj.disable_touch = true;
+
+        menu_function_obj.updateStatusBar();
+
+        while (!c_btn.justReleased())
+          delay(1);
+      }
+    #endif
+  #endif
+
+  // Update all of our objects
+  cli_obj.main(currentTime);
+
+  #if defined(HAS_SCREEN) && defined(MARAUDER_V8)
+    // Service physical touch before Wi-Fi callbacks, GPS parsing, or SD buffer
+    // writes. A slow capture/storage pass can no longer starve BACK or PAUSE.
+    menu_function_obj.main(currentTime);
+  #endif
+
+  wifi_scan_obj.main(currentTime);
+
+  #ifdef HAS_GPS
+    gps_obj.main();
+  #endif
+
+  // Save buffer to SD and/or serial
+  buffer_obj.save();
+
+  #ifdef HAS_BATTERY
+    battery_obj.main(currentTime);
+  #endif
+  #ifdef HAS_SCREEN
+    #ifndef MARAUDER_V8
+      if ((wifi_scan_obj.currentScanMode != WIFI_PACKET_MONITOR) || mini)
+        menu_function_obj.main(currentTime);
+    #endif
+  #endif
+  // Draw the M5SHARK HUD after every screen producer. drawSharkTopBar() owns
+  // its throttle and state-change fast path, keeping icons above buffered tools.
+  #if defined(HAS_SCREEN) && defined(MARAUDER_V8)
+    menu_function_obj.updateStatusBar();
+  #endif
+  #ifdef HAS_FLIPPER_LED
+    flipper_led.main();
+  #elif defined(XIAO_ESP32_S3)
+    xiao_led.main();
+  #elif defined(MARAUDER_M5STICKC)
+    stickc_led.main();
+  #elif defined(HAS_NEOPIXEL_LED)
+    led_obj.main(currentTime);
+  #endif
+
+  #ifdef HAS_SCREEN
+    delay(1);
+  #else
+    delay(50);
+  #endif
+}

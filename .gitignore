@@ -1,0 +1,15 @@
+*
+!m5shark/
+!m5shark/**
+!mcp-server/
+!mcp-server/**
+!README.md
+!LICENSE
+!arduino-cli-esp32-3.3.4.yaml
+!build-shark-v8.ps1
+!m5shark-r150-readme-banner.gif
+!assets/
+!assets/**
+!hardware/
+!hardware/**
+!.gitignore

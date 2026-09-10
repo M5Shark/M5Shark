@@ -1,0 +1,606 @@
+{
+  "format": "M5SHARK ASCII terminal icons v1",
+  "size": [
+    22,
+    22
+  ],
+  "count": 74,
+  "master": "assets/icons/ascii-terminal/ascii-terminal-master-v1.png",
+  "master_sha256": "6f90918c0a21d276d5f20ce7a7e851eea11c0f5b8968def89dd90618ab914814",
+  "threshold": 34,
+  "header": "esp32_marauder/SharkAsciiIcons.h",
+  "icons": [
+    {
+      "index": 0,
+      "constant": "ATTACKS",
+      "label": "Attack",
+      "source": "assets/icons/ascii-terminal/source/00-attacks.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/00-attacks.png",
+      "master_cell": 0
+    },
+    {
+      "index": 1,
+      "constant": "BEACON_SNIFF",
+      "label": "Beacon Sniff",
+      "source": "assets/icons/ascii-terminal/source/01-beacon-sniff.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/01-beacon-sniff.png",
+      "master_cell": 1
+    },
+    {
+      "index": 2,
+      "constant": "BLUETOOTH",
+      "label": "Bluetooth",
+      "source": "assets/icons/ascii-terminal/source/02-bluetooth.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/02-bluetooth.png",
+      "master_cell": 2
+    },
+    {
+      "index": 3,
+      "constant": "BLUETOOTH_SNIFF",
+      "label": "Bluetooth Sniff",
+      "source": "assets/icons/ascii-terminal/source/03-bluetooth-sniff.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/03-bluetooth-sniff.png",
+      "master_cell": 3
+    },
+    {
+      "index": 4,
+      "constant": "DEAUTH_SNIFF",
+      "label": "Deauth Alert",
+      "source": "assets/icons/ascii-terminal/source/04-deauth-alert.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/04-deauth-alert.png",
+      "master_cell": 4
+    },
+    {
+      "index": 5,
+      "constant": "DRAW",
+      "label": "Draw",
+      "source": "assets/icons/ascii-terminal/source/05-draw.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/05-draw.png",
+      "master_cell": 5
+    },
+    {
+      "index": 6,
+      "constant": "PACKET_MONITOR",
+      "label": "Packet Monitor",
+      "source": "assets/icons/ascii-terminal/source/06-packet-monitor.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/06-packet-monitor.png",
+      "master_cell": 7
+    },
+    {
+      "index": 7,
+      "constant": "PROBE_SNIFF",
+      "label": "Probe Sniff",
+      "source": "assets/icons/ascii-terminal/source/07-probe-sniff.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/07-probe-sniff.png",
+      "master_cell": 6
+    },
+    {
+      "index": 8,
+      "constant": "SCANNERS",
+      "label": "Scanners",
+      "source": "assets/icons/ascii-terminal/source/08-scanners.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/08-scanners.png",
+      "master_cell": 8
+    },
+    {
+      "index": 9,
+      "constant": "CC_SKIMMERS",
+      "label": "Card Skimmer",
+      "source": "assets/icons/ascii-terminal/source/09-card-skimmer.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/09-card-skimmer.png",
+      "master_cell": 12
+    },
+    {
+      "index": 10,
+      "constant": "SNIFFERS",
+      "label": "Sniffers",
+      "source": "assets/icons/ascii-terminal/source/10-sniffers.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/10-sniffers.png",
+      "master_cell": 10
+    },
+    {
+      "index": 11,
+      "constant": "WIFI",
+      "label": "WiFi",
+      "source": "assets/icons/ascii-terminal/source/11-wifi.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/11-wifi.png",
+      "master_cell": 14
+    },
+    {
+      "index": 12,
+      "constant": "BEACON_SPAM",
+      "label": "Beacon Broadcast",
+      "source": "assets/icons/ascii-terminal/source/12-beacon-spam.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/12-beacon-spam.png",
+      "master_cell": 15
+    },
+    {
+      "index": 13,
+      "constant": "RICK_ROLL",
+      "label": "Music Prank",
+      "source": "assets/icons/ascii-terminal/source/13-rick-roll.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/13-rick-roll.png",
+      "master_cell": 16
+    },
+    {
+      "index": 14,
+      "constant": "REBOOT",
+      "label": "Reboot",
+      "source": "assets/icons/ascii-terminal/source/14-reboot.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/14-reboot.png",
+      "master_cell": 18
+    },
+    {
+      "index": 15,
+      "constant": "GENERAL_APPS",
+      "label": "General Apps",
+      "source": "assets/icons/ascii-terminal/source/15-general-apps.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/15-general-apps.png",
+      "master_cell": 19
+    },
+    {
+      "index": 16,
+      "constant": "UPDATE",
+      "label": "Firmware Update",
+      "source": "assets/icons/ascii-terminal/source/16-update.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/16-update.png",
+      "master_cell": 20
+    },
+    {
+      "index": 17,
+      "constant": "DEVICE",
+      "label": "Device",
+      "source": "assets/icons/ascii-terminal/source/17-device.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/17-device.png",
+      "master_cell": 21
+    },
+    {
+      "index": 18,
+      "constant": "DEVICE_INFO",
+      "label": "Device Info",
+      "source": "assets/icons/ascii-terminal/source/18-device-info.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/18-device-info.png",
+      "master_cell": 22
+    },
+    {
+      "index": 19,
+      "constant": "SD_UPDATE",
+      "label": "SD Update",
+      "source": "assets/icons/ascii-terminal/source/19-sd-update.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/19-sd-update.png",
+      "master_cell": 23
+    },
+    {
+      "index": 20,
+      "constant": "WEB_UPDATE",
+      "label": "Web Update",
+      "source": "assets/icons/ascii-terminal/source/20-web-update.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/20-web-update.png",
+      "master_cell": 24
+    },
+    {
+      "index": 21,
+      "constant": "EAPOL",
+      "label": "Handshake",
+      "source": "assets/icons/ascii-terminal/source/21-eapol.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/21-eapol.png",
+      "master_cell": 25
+    },
+    {
+      "index": 22,
+      "constant": "STATUS_BAT",
+      "label": "Battery",
+      "source": "assets/icons/ascii-terminal/source/22-battery.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/22-battery.png",
+      "master_cell": 26
+    },
+    {
+      "index": 23,
+      "constant": "STATUS_SD",
+      "label": "SD Card",
+      "source": "assets/icons/ascii-terminal/source/23-sd-card.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/23-sd-card.png",
+      "master_cell": 27
+    },
+    {
+      "index": 24,
+      "constant": "PWNAGOTCHI",
+      "label": "Pwn Mascot",
+      "source": "assets/icons/ascii-terminal/source/24-pwn-mascot.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/24-pwn-mascot.png",
+      "master_cell": 28
+    },
+    {
+      "index": 25,
+      "constant": "SHUTDOWN",
+      "label": "Shutdown",
+      "source": "assets/icons/ascii-terminal/source/25-shutdown.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/25-shutdown.png",
+      "master_cell": 29
+    },
+    {
+      "index": 26,
+      "constant": "BEACON_LIST",
+      "label": "Beacon List",
+      "source": "assets/icons/ascii-terminal/source/26-beacon-list.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/26-beacon-list.png",
+      "master_cell": 30
+    },
+    {
+      "index": 27,
+      "constant": "GENERATE",
+      "label": "Generate",
+      "source": "assets/icons/ascii-terminal/source/27-generate.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/27-generate.png",
+      "master_cell": 31
+    },
+    {
+      "index": 28,
+      "constant": "CLEAR_ICO",
+      "label": "Clear",
+      "source": "assets/icons/ascii-terminal/source/28-clear.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/28-clear.png",
+      "master_cell": 33
+    },
+    {
+      "index": 29,
+      "constant": "KEYBOARD_ICO",
+      "label": "Keyboard",
+      "source": "assets/icons/ascii-terminal/source/29-keyboard.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/29-keyboard.png",
+      "master_cell": 34
+    },
+    {
+      "index": 30,
+      "constant": "JOIN_WIFI",
+      "label": "Join WiFi",
+      "source": "assets/icons/ascii-terminal/source/30-join-wifi.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/30-join-wifi.png",
+      "master_cell": 35
+    },
+    {
+      "index": 31,
+      "constant": "LANGUAGE",
+      "label": "Language",
+      "source": "assets/icons/ascii-terminal/source/31-language.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/31-language.png",
+      "master_cell": 36
+    },
+    {
+      "index": 32,
+      "constant": "STATUS_GPS",
+      "label": "GPS Status",
+      "source": "assets/icons/ascii-terminal/source/32-gps-status.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/32-gps-status.png",
+      "master_cell": 38
+    },
+    {
+      "index": 33,
+      "constant": "GPS_MENU",
+      "label": "GPS Menu",
+      "source": "assets/icons/ascii-terminal/source/33-gps-menu.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/33-gps-menu.png",
+      "master_cell": 39
+    },
+    {
+      "index": 34,
+      "constant": "DISABLE_TOUCH",
+      "label": "Touch Disabled",
+      "source": "assets/icons/ascii-terminal/source/34-touch-disabled.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/34-touch-disabled.png",
+      "master_cell": 41
+    },
+    {
+      "index": 35,
+      "constant": "FLIPPER",
+      "label": "External Tool",
+      "source": "assets/icons/ascii-terminal/source/35-external-tool.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/35-external-tool.png",
+      "master_cell": 42
+    },
+    {
+      "index": 36,
+      "constant": "BLANK",
+      "label": "Blank",
+      "source": "assets/icons/ascii-terminal/source/36-blank.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/36-blank.png",
+      "master_cell": 43
+    },
+    {
+      "index": 37,
+      "constant": "PINESCAN_SNIFF",
+      "label": "Pine/MultiSSID",
+      "source": "assets/icons/ascii-terminal/source/37-pinescan-multissid.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/37-pinescan-multissid.png",
+      "master_cell": 28
+    },
+    {
+      "index": 38,
+      "constant": "JOINED",
+      "label": "Connected",
+      "source": "assets/icons/ascii-terminal/source/38-connected.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/38-connected.png",
+      "master_cell": 44
+    },
+    {
+      "index": 39,
+      "constant": "FORCE",
+      "label": "Force",
+      "source": "assets/icons/ascii-terminal/source/39-force.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/39-force.png",
+      "master_cell": 46
+    },
+    {
+      "index": 40,
+      "constant": "FUNNY_BEACON",
+      "label": "Funny Beacon",
+      "source": "assets/icons/ascii-terminal/source/40-funny-beacon.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/40-funny-beacon.png",
+      "master_cell": 47
+    },
+    {
+      "index": 41,
+      "constant": "FLOCK",
+      "label": "Flock",
+      "source": "assets/icons/ascii-terminal/source/41-flock.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/41-flock.png",
+      "master_cell": 48
+    },
+    {
+      "index": 42,
+      "constant": "BRIGHTNESS",
+      "label": "Brightness",
+      "source": "assets/icons/ascii-terminal/source/42-brightness.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/42-brightness.png",
+      "master_cell": 49
+    },
+    {
+      "index": 43,
+      "constant": "SETTINGS",
+      "label": "Settings",
+      "source": "assets/icons/ascii-terminal/source/43-settings.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/43-settings.png",
+      "master_cell": 50
+    },
+    {
+      "index": 44,
+      "constant": "ICENAV",
+      "label": "IceNav",
+      "source": "assets/icons/ascii-terminal/source/44-icenav.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/44-icenav.png",
+      "master_cell": 40
+    },
+    {
+      "index": 45,
+      "constant": "NAV_COMPASS_ICON",
+      "label": "Nav Compass",
+      "source": "assets/icons/ascii-terminal/source/45-nav-compass.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/45-nav-compass.png",
+      "master_cell": 9
+    },
+    {
+      "index": 46,
+      "constant": "SAT_INFO_ICON",
+      "label": "Satellite Info",
+      "source": "assets/icons/ascii-terminal/source/46-satellite-info.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/46-satellite-info.png",
+      "master_cell": 46
+    },
+    {
+      "index": 47,
+      "constant": "ADD_WPT_ICON",
+      "label": "Add Waypoint",
+      "source": "assets/icons/ascii-terminal/source/47-add-waypoint.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/47-add-waypoint.png",
+      "master_cell": 47
+    },
+    {
+      "index": 48,
+      "constant": "SENSOR_RADAR_ICON",
+      "label": "Sensor Radar",
+      "source": "assets/icons/ascii-terminal/source/48-sensor-radar.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/48-sensor-radar.png",
+      "master_cell": 11
+    },
+    {
+      "index": 49,
+      "constant": "PROFILE_ICON",
+      "label": "Operator Profile",
+      "source": "assets/icons/ascii-terminal/source/49-operator-profile.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/49-operator-profile.png",
+      "master_cell": null
+    },
+    {
+      "index": 50,
+      "constant": "PING_SCAN_ICON",
+      "label": "Ping Scan",
+      "source": "assets/icons/ascii-terminal/source/50-ping-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/50-ping-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 51,
+      "constant": "PORT_SCAN_ICON",
+      "label": "Port Scan All",
+      "source": "assets/icons/ascii-terminal/source/51-port-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/51-port-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 52,
+      "constant": "SSH_SCAN_ICON",
+      "label": "SSH Scan",
+      "source": "assets/icons/ascii-terminal/source/52-ssh-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/52-ssh-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 53,
+      "constant": "TELNET_SCAN_ICON",
+      "label": "Telnet Scan",
+      "source": "assets/icons/ascii-terminal/source/53-telnet-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/53-telnet-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 54,
+      "constant": "SMTP_SCAN_ICON",
+      "label": "SMTP Scan",
+      "source": "assets/icons/ascii-terminal/source/54-smtp-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/54-smtp-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 55,
+      "constant": "DNS_SCAN_ICON",
+      "label": "DNS Scan",
+      "source": "assets/icons/ascii-terminal/source/55-dns-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/55-dns-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 56,
+      "constant": "HTTP_SCAN_ICON",
+      "label": "HTTP Scan",
+      "source": "assets/icons/ascii-terminal/source/56-http-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/56-http-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 57,
+      "constant": "HTTPS_SCAN_ICON",
+      "label": "HTTPS Scan",
+      "source": "assets/icons/ascii-terminal/source/57-https-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/57-https-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 58,
+      "constant": "RDP_SCAN_ICON",
+      "label": "RDP Scan",
+      "source": "assets/icons/ascii-terminal/source/58-rdp-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/58-rdp-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 59,
+      "constant": "FTP_SCAN_ICON",
+      "label": "FTP Scan",
+      "source": "assets/icons/ascii-terminal/source/59-ftp-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/59-ftp-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 60,
+      "constant": "SMB_SCAN_ICON",
+      "label": "SMB Scan",
+      "source": "assets/icons/ascii-terminal/source/60-smb-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/60-smb-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 61,
+      "constant": "MQTT_SCAN_ICON",
+      "label": "MQTT Scan",
+      "source": "assets/icons/ascii-terminal/source/61-mqtt-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/61-mqtt-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 62,
+      "constant": "MYSQL_SCAN_ICON",
+      "label": "MySQL Scan",
+      "source": "assets/icons/ascii-terminal/source/62-mysql-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/62-mysql-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 63,
+      "constant": "POSTGRES_SCAN_ICON",
+      "label": "Postgres Scan",
+      "source": "assets/icons/ascii-terminal/source/63-postgres-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/63-postgres-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 64,
+      "constant": "VNC_SCAN_ICON",
+      "label": "VNC Scan",
+      "source": "assets/icons/ascii-terminal/source/64-vnc-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/64-vnc-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 65,
+      "constant": "REDIS_SCAN_ICON",
+      "label": "Redis Scan",
+      "source": "assets/icons/ascii-terminal/source/65-redis-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/65-redis-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 66,
+      "constant": "MQTTS_SCAN_ICON",
+      "label": "MQTT TLS Scan",
+      "source": "assets/icons/ascii-terminal/source/66-mqtt-tls-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/66-mqtt-tls-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 67,
+      "constant": "ARP_SCAN_ICON",
+      "label": "ARP Scan",
+      "source": "assets/icons/ascii-terminal/source/67-arp-scan.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/67-arp-scan.png",
+      "master_cell": null
+    },
+    {
+      "index": 68,
+      "constant": "BEACON_LIST_ATTACK_ICON",
+      "label": "Beacon List Attack",
+      "source": "assets/icons/ascii-terminal/source/68-beacon-list-attack.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/68-beacon-list-attack.png",
+      "master_cell": null
+    },
+    {
+      "index": 69,
+      "constant": "BEACON_SPAM_ATTACK_ICON",
+      "label": "Random Beacon Spam",
+      "source": "assets/icons/ascii-terminal/source/69-beacon-spam-attack.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/69-beacon-spam-attack.png",
+      "master_cell": null
+    },
+    {
+      "index": 70,
+      "constant": "FUNNY_BEACON_ATTACK_ICON",
+      "label": "Funny SSID Beacon",
+      "source": "assets/icons/ascii-terminal/source/70-funny-beacon-attack.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/70-funny-beacon-attack.png",
+      "master_cell": null
+    },
+    {
+      "index": 71,
+      "constant": "RICK_ROLL_BEACON_ICON",
+      "label": "Rick Roll Beacon",
+      "source": "assets/icons/ascii-terminal/source/71-rick-roll-beacon.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/71-rick-roll-beacon.png",
+      "master_cell": null
+    },
+    {
+      "index": 72,
+      "constant": "PROBE_FLOOD_ATTACK_ICON",
+      "label": "Probe Request Flood",
+      "source": "assets/icons/ascii-terminal/source/72-probe-flood-attack.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/72-probe-flood-attack.png",
+      "master_cell": null
+    },
+    {
+      "index": 73,
+      "constant": "DEAUTH_FLOOD_ATTACK_ICON",
+      "label": "Deauth Flood",
+      "source": "assets/icons/ascii-terminal/source/73-deauth-flood-attack.png",
+      "firmware_png": "assets/icons/ascii-terminal/firmware-22x22/73-deauth-flood-attack.png",
+      "master_cell": null
+    }
+  ]
+}

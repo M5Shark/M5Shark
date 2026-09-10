@@ -1,0 +1,11 @@
+# M5SHARK v8 custom 8 MB layout. Same start offsets as default_8MB, but
+# the two OTA app slots grow from 0x330000 (3,342,336) to 0x370000
+# (3,604,480) bytes - about 260 KB of headroom per slot - while SPIFFS
+# shrinks from ~1.5 MB to 1.1 MB (settings/portal HTML need far less).
+# Requires a FULL flash (the partition table changes app1's offset).
+# Name,   Type, SubType, Offset,  Size,     Flags
+nvs,      data, nvs,     0x9000,  0x5000,
+otadata,  data, ota,     0xe000,  0x2000,
+app0,     app,  ota_0,   0x10000, 0x370000,
+app1,     app,  ota_1,   0x380000, 0x370000,
+spiffs,   data, spiffs,  0x6f0000, 0x110000,

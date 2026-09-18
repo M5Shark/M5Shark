@@ -45,7 +45,7 @@
 // ESP32Marauder v1.15.0 engine by justcallmekoko -- that credit is kept in
 // the docs and landing page -- but the version this device reports is the
 // M5SHARK release, not the base engine's.
-#define MARAUDER_VERSION "R153"
+#define MARAUDER_VERSION "R154"
 
 // M5 SHARK visual identity. The product name is fixed; every color, the
 // system tag, and the boot art belong to the active theme and live in

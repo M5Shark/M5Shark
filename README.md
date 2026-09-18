@@ -8,7 +8,7 @@
 
 A hand-held wireless security testing device built on the ESP32-C5, running the SHARK firmware with terminal UI, theme engine, 50+ tools, and full AI assistant control via MCP.
 
-![Version](https://img.shields.io/badge/version-R152-blue) ![Chip](https://img.shields.io/badge/chip-ESP32--C5-orange) ![MCP](https://img.shields.io/badge/AI--Control-58%20MCP%20Tools-purple) ![License](https://img.shields.io/badge/license-GPL--3.0-lightgrey)
+![Version](https://img.shields.io/badge/version-R154-blue) ![Chip](https://img.shields.io/badge/chip-ESP32--C5-orange) ![MCP](https://img.shields.io/badge/AI--Control-58%20MCP%20Tools-purple) ![License](https://img.shields.io/badge/license-GPL--3.0-lightgrey)
 
 > **Get the device:** [m5shark.com/products/m5shark-marauder-v8](https://m5shark.com/products/m5shark-marauder-v8)
 
@@ -460,6 +460,8 @@ Key milestones:
 - **R142** — Scan AP active survey
 - **R143** — Matrix green default theme
 - **R144-151** — Chameleon Ultra remote (auto-connect, NUS, emulation)
+- **R153** — Games + AI game creation via MCP (62 tools)
+- **R154** — stability fixes: BLE spam null-pointer (PR #1 + follow-ups), snake stack/food, reaction BACK
 
 ![divider](assets/10-ascii-divider.gif)
 

@@ -585,7 +585,9 @@ void SharkGames::gamesMenu() {
   const uint8_t nb = 3;
   uint8_t nc = customCount();
 
-  while (true) {
+  // Paint the whole menu once. The touch-poll loop below must NOT redraw:
+  // fillScreen per iteration is what made the menu blink.
+  auto draw = [&]() {
     frame("GAMES");
 
     // Built-in games
@@ -622,23 +624,29 @@ void SharkGames::gamesMenu() {
     }
 
     backKey();
+  };
 
+  draw();
+
+  while (true) {
     uint16_t tx, ty;
     if (!tap(&tx, &ty)) { delay(15); continue; }
     waitRelease();
     if (backHit(ty)) return;
 
     // Map tap to game
+    bool launched = false;
     uint8_t by = 48;
     for (uint8_t i = 0; i < nb; i++) {
       if (ty >= by && ty < by + 36) {
         builtins[i].run();
+        launched = true;
         break;
       }
       by += 40;
     }
     // Custom games start after "CUSTOM" label
-    if (nc > 0) {
+    if (!launched && nc > 0) {
       uint8_t cy = 48 + nb * 40 + 18;
       for (uint8_t i = 0; i < nc && i < 4; i++) {
         if (ty >= cy && ty < cy + 30) {
@@ -663,11 +671,15 @@ void SharkGames::gamesMenu() {
               }
             }
           #endif
+          launched = true;
           break;
         }
         cy += 34;
       }
     }
+
+    // A game ran and drew its own screens — repaint the menu once.
+    if (launched) draw();
   }
 }
 

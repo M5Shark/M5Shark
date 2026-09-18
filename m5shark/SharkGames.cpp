@@ -126,7 +126,9 @@ namespace {
 
 // ===== SNAKE =====
 void SharkGames::snake() {
-  Vec2 snake[200];
+  // Static to avoid 400+ bytes on the loopTask stack (the game also
+  // creates lambdas that reference these, growing the frame further).
+  static Vec2 snake[200];
   int len = 3;
   int dir = 3; // 0=up 1=down 2=left 3=right
   Vec2 food = {10, 12};
@@ -136,7 +138,14 @@ void SharkGames::snake() {
   auto reset = [&]() {
     len = 3; dir = 3; score = 0; dead = false;
     for (int i = 0; i < len; i++) { snake[i].x = 5 - i; snake[i].y = 8; }
-    food.x = random(0, W / GRID); food.y = random(0, (H - 100) / GRID);
+    // Spawn food on a cell not occupied by the snake.
+    bool ok = false;
+    while (!ok) {
+      food.x = random(0, W / GRID); food.y = random(0, (H - 100) / GRID);
+      ok = true;
+      for (int i = 0; i < len; i++)
+        if (snake[i].x == food.x && snake[i].y == food.y) { ok = false; break; }
+    }
   };
 
   reset();
@@ -185,8 +194,15 @@ void SharkGames::snake() {
       bool ate = (head.x == food.x && head.y == food.y);
       if (ate) {
         score++;
-        food.x = random(0, W / GRID);
-        food.y = random(0, (H - 100) / GRID);
+        // Respawn food on a free cell.
+        bool free = false;
+        while (!free) {
+          food.x = random(0, W / GRID);
+          food.y = random(0, (H - 100) / GRID);
+          free = true;
+          for (int i = 0; i < len; i++)
+            if (snake[i].x == food.x && snake[i].y == food.y) { free = false; break; }
+        }
       }
 
       // Shift body
@@ -258,8 +274,10 @@ void SharkGames::reaction() {
     // Random delay 1-4 seconds
     delay(random(1000, 4000));
 
-    // Check if user tapped too early
+    // Check if user tapped (BACK exits cleanly, anything else = too early)
     if (tft.getTouch(&tx, &ty, 350)) {
+      waitRelease();
+      if (backHit(ty)) return;
       tft.setTextDatum(MC_DATUM);
       tft.setTextColor(th().warn, TFT_BLACK);
       tft.drawString("TOO EARLY!", W / 2, 150, 3);

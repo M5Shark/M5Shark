@@ -3108,6 +3108,10 @@ bool WiFiScan::shutdownBLE() {
       // every entry point reuses it through ensureBLE()/isInitialized().
       this->bleSoftStop();
 
+      // Clear the advertising pointer so no caller can dereference a stale
+      // object after the stack was torn down.
+      pAdvertising = nullptr;
+
       this->_analyzer_value = 0;
       this->bt_frames = 0;
 
@@ -6909,15 +6913,21 @@ void WiFiScan::RunFindMyLive(uint8_t scan_mode, uint16_t color) {
 
 void WiFiScan::RunSourApple(uint8_t scan_mode, uint16_t color) {
   #ifdef HAS_BT
-    NimBLEDevice::init("");
-
+    // Only init if not already up (ensureBLE may have initialized).
+    if (!NimBLEDevice::isInitialized()) {
+      NimBLEDevice::init("");
+      this->ble_initialized = true;
+    }
     #ifdef HAS_NIMBLE_2
       if (!NimBLEDevice::setPower(20))
         Serial.println("Failed to set NimBLE output power");
     #endif
-    NimBLEServer *pServer = NimBLEDevice::createServer();
-
-    pAdvertising = pServer->getAdvertising();
+    // Always (re)acquire the advertising object with null safety.
+    pAdvertising = NimBLEDevice::getAdvertising();
+    if (!pAdvertising) {
+      NimBLEServer *pServer = NimBLEDevice::createServer();
+      if (pServer) pAdvertising = pServer->getAdvertising();
+    }
 
     // V8: the themed BLE Spam dashboard (drawBleSpamUI) owns the screen from
     // the moment the menu tile is tapped; this legacy stage must not flash

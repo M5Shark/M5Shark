@@ -208,7 +208,10 @@ bool SharkChameleon::connectOnce() {
 }
 
 bool SharkChameleon::sendCmd(uint16_t cmd, const uint8_t* data, uint16_t len) {
-  if (!cu_connected || !cu_write) return false;
+  if (!cu_connected || !cu_write) {
+    Serial.println(F("[CU] sendCmd: not connected or no write characteristic"));
+    return false;
+  }
   uint8_t frame[530];
   frame[0] = CU_SOF;
   frame[1] = 0xEF;

@@ -5859,9 +5859,17 @@ void WiFiScan::executeBLESpam(EBLEPayloadType type) {
         if (!NimBLEDevice::setPower(20))
           Serial.println("Failed to set NimBLE output power");
       #endif
-      NimBLEServer* pServer = NimBLEDevice::createServer();
-      pAdvertising = pServer->getAdvertising();
       this->ble_initialized = true;
+    }
+
+    // StartScan()/ensureBLE() may have initialized NimBLE before BLE spam
+    // starts. In that path the old code skipped advertising acquisition and
+    // pAdvertising remained null, causing a null-object crash on ESP32-C5.
+    pAdvertising = NimBLEDevice::getAdvertising();
+    if (pAdvertising == nullptr) {
+      Serial.println(F("[BT] BLE spam aborted: advertising object unavailable"));
+      this->bt_sour_running = false;
+      return;
     }
 
     #ifdef HAS_NIMBLE_2
